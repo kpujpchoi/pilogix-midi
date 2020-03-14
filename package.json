@@ -1,0 +1,14 @@
+{
+  "name": "midi-me",
+  "version": "1.0.0",
+  "description": "MidiMe\r =================\r MidiMe is a machine learning experiment to train a small model to sound \r like you! (or rather, like a MIDI file that you upload).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

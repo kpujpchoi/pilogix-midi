@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>jp</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@magenta/music@1.9.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@5.7.0/dist/d3.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono:400,700&display=optional" rel="stylesheet">
+    <link rel="icon" href="https://magenta.tensorflow.org/favicon.ico">
+  </head>  
+  <body>
+    <div class="full green" id="splashScreen">
+      <div class="content small">
+        <section>
+          <h1>JP 페이지</h1>
+        </section>
+        
+        <section>
+          <p style="text-align: center">
+              JP의 페이지
+          </p>
+        </section>
+
+        <section>
+          <div class="horizontal">
+            <button id="btnGoMelodies" class="button">뮤직 멜로디 생성</button>
+          </div>
+        </section>
+
+        <section>
+          <div class="horizontal">
+            <button id="btnGoSensor" class="button">센서 프로젝트</button>
+            <button id="btnGoPilogix" class="button">PiLogix</button>
+          </div>
+        </section>
+        
+        <section>
+          <p style="text-align: center">
+              Email: jpchoi@kpu.ac.kr
+          </p>
+        </section>
+      </div>
+    </div>
+    
+    <div class="full" id="mainScreen" hidden>
+      <div class="content">
+        <h1><span id="modeText" hidden>midi</span><b>뮤직 멜로디</b></h1>
+        
+        
+        <section id="section_1">
+          <div class="index" id="two">1</div>
+          <h2>멜로디 예</h2>
+                  
+          <p id="afterTraining" hidden>🆕🆕🆕 This new model we trained learned to summarize those 256 sliders as 4 <b>super sliders</b>. The super sliders
+            control the features that make the random samples sound like your input. When you use them, the sample won't 
+            randomly change like it does when you use the regular sliders.
+          </p>
+            
+          <b><p id="loadingStatus">로딩중...</p></b>
+          
+          <p>
+            <button class="button" id="btnSample" disabled>다른 샘플 얻기</button>
+          </p>
+          
+          <div id="afterLoading" hidden>
+            <div class="horizontal">
+              <div class="sliders-container blue" id="midimeSlidersContainer" hidden>
+                <p>✨<b>super</b> sliders!✨</p>
+                <div class="sliders horizontal" id="midimeSliders">
+                  <div class="range-wrap"><input type="range" data-index="0" min="-1" max="1" step="0.1" value="0"></div>
+                  <div class="range-wrap"><input type="range" data-index="1" min="-1" max="1" step="0.1" value="0"></div>
+                  <div class="range-wrap"><input type="range" data-index="2" min="-1" max="1" step="0.1" value="0"></div>
+                  <div class="range-wrap"><input type="range" data-index="3" min="-1" max="1" step="0.1" value="0"></div>
+                </div>
+              </div>
+
+              <div class="sliders-container green">
+                <p>샘풀의 특성</p>
+                <svg id="lines"></svg> 
+                <div class="sliders horizontal" id="mvaeSliders"></div>
+              </div>
+            </div>
+
+            <p>샘플 사운드</p>
+            <div class="relative">
+              <div class="visualizer-container cream">
+                <button id="btnPlaySample" class="button-circle" aria-label="play">
+                  <svg class="iconPlay" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                  <svg class="iconStop" hidden xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M6 6h12v12H6z"/></svg>      
+                </button>
+                <svg id="vizSample"></svg>
+              </div>
+            </div>
+            <br>
+            <button id="saveBtn" class="button">샘플 사운드 저장</button>
+            <br>
+          </div>
+        </section>
+        
+        <section id="section_2" hidden>
+          <div class="index">2</div>
+          <h2>새 사운드 선택</h2>
+          
+          <p>
+            <label class="button" id="fileBtn">
+              미디파일 적재
+              <input type="file" id="fileInput" multiple>
+            </label>
+            
+            <button id="sampleBtn" class="button">
+              기본 예제 사용
+            </button>
+            
+            <div>
+              <button id="urlBtn" class="button">
+                url 적재
+              </button>
+              <input id="urlInput" type="text" value="https://bitmidi.com/uploads/15119.mid">
+              
+
+            </div>
+          </p>
+          <b><p id="status" hidden></p></b>
+          
+          <div id="input" hidden>
+            <p>This is what your file sounds like:</p>
+            <div class="relative">
+              <button id="btnPlayInput" class="button-circle" aria-label="play">
+                <svg class="iconPlay" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                <svg class="iconStop" hidden xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M6 6h12v12H6z"/></svg>      
+              </button>
+              <div class="visualizer-container cream">
+                <svg id="vizInput"></svg>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <section id="section_3" hidden>
+          <div class="index">3</div>
+          <h2>Personalize the model!</h2>
+          
+          <div id="hasMelody" hidden>
+            <p>The MIDI file you uploaded had several instruments, so this is what we think the melody is. This is what we will be training on.</p>
+            <div class="relative">
+              <button id="btnPlayMelody" class="button-circle" aria-label="play">
+                <svg class="iconPlay" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                <svg class="iconStop" hidden xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M6 6h12v12H6z"/></svg>      
+              </button>
+              <div class="visualizer-container cream">
+                <svg id="vizMelody"></svg>
+              </div>
+            </div>
+          </div>
+          
+          <p id="beforeTraining">We're ready to start training on the MIDI that you uploaded! If you think about MusicVAE as representing the
+            space of all possible melodies as a giant sphere, we are now building a smaller sphere 
+            inside of it, which represents all the melodies that are musically in the same neighbourhood as <b>yours</b>. The more steps you 
+            train for, the better the results are. <br>
+            When you're ready, <button class="button" id="btnTrain">start training!!</button> for <input id="trainingSteps" value="100" type="tel"> steps.
+          </p>
+          <p id="doneTraining" hidden><b>Training complete!</b><br>
+            We've now added 4 new MidiMe sliders to Step 1: these super slliders
+            control the features that make the random samples sound like <b>your</b> input. Go slide them around and see
+            how the samples change!<br>
+          </p>
+          <div id="duringTraining" hidden>
+            <p>Training step: <b id="trainingStep">0</b> / <span id="totalSteps">100</span></p>
+            <p>To check how well we're training the model, we can track its error reconstructing your
+              uploaded file. We're not looking for it to become exactly 0 -- just to go down and flatten out. </p>
+            <svg id="errorGraph" width="300"></svg>
+          </div>
+        </section>
+      </div>
+    </div>
+  </body>  
+  <script src="helpers.js"></script>
+  <script src="script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js" defer></script>
+</html>

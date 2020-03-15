@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
   <head>
     <title>jp</title>
     <meta charset="utf-8">
@@ -17,12 +17,6 @@
         <section>
           <h1>JP 페이지</h1>
         </section>
-        
-        <section>
-          <p style="text-align: center">
-              JP의 페이지
-          </p>
-        </section>
 
         <section>
           <div class="horizontal">
@@ -31,15 +25,20 @@
         </section>
 
         <section>
+          <div class="horizontal" hidden>
+            <button id="btnGoTrios" class="button">🎹🎸🥁 trios</button>
+          </div>
+        </section>
+        
+        <section>
           <div class="horizontal">
             <button id="btnGoSensor" class="button">센서 프로젝트</button>
-            <button id="btnGoPilogix" class="button">PiLogix</button>
           </div>
         </section>
         
         <section>
           <p style="text-align: center">
-              Email: jpchoi@kpu.ac.kr
+              Email : jpchoi@kpu.ac.kr
           </p>
         </section>
       </div>
@@ -47,30 +46,20 @@
     
     <div class="full" id="mainScreen" hidden>
       <div class="content">
-        <h1><span id="modeText">midi</span><b>me</b></h1>
+        <h1><span id="modeText" hidden>midi</span><b>뮤직 멜로디</h1>
         
         
         <section id="section_1">
           <div class="index" id="two">1</div>
-          <h2>Hear some samples!</h2>
-          
-          <p><a href="https://magenta.tensorflow.org/music-vae">MusicVAE</a> is a machine learning model that has previously been trained
-            on a lot of MIDI files, and has learned to generate melodies or trios. It 
-            represents each music sample as a vector 
-            of 256 features, and every different vector of 256 numbers sounds like a different piece of music. Here are 
-            some sliders for 90 of all these possible features 
-            -- we picked the most important ones to keep things simple. Slide some of them around and see how it affects the sample!</p>
-          
-          <p id="afterTraining" hidden>🆕🆕🆕 This new model we trained learned to summarize those 256 sliders as 4 <b>super sliders</b>. The super sliders
-            control the features that make the random samples sound like your input. When you use them, the sample won't 
-            randomly change like it does when you use the regular sliders.
+          <h2>멜로디 예</h2>
+                  
+          <p id="afterTraining" hidden>생성된 멜로디 
           </p>
             
-          <b><p id="loadingStatus">Loading model...</p></b>
+          <b><p id="loadingStatus">로딩중 ...</p></b>
           
           <p>
-            You can also <button class="button" id="btnSample" disabled>get another sample</button>
-            whenever you want.
+            <button class="button" id="btnSample" disabled>다른 샘플 얻기</button>
           </p>
           
           <div id="afterLoading" hidden>
@@ -86,13 +75,13 @@
               </div>
 
               <div class="sliders-container green">
-                <p>use these sliders to change some features of the sample</p>
+                <p>샘플의 특성</p>
                 <svg id="lines"></svg> 
                 <div class="sliders horizontal" id="mvaeSliders"></div>
               </div>
             </div>
 
-            <p>And this is what that sample sounds like:</p>
+            <p>샘플 사운드 듣기</p>
             <div class="relative">
               <div class="visualizer-container cream">
                 <button id="btnPlaySample" class="button-circle" aria-label="play">
@@ -103,9 +92,9 @@
               </div>
             </div>
             <br>
-            <button id="saveBtn" class="button">save this sample</button>
+            <button id="saveBtn" class="button">샘플 사운드 저장</button>
             <br>
-            <p id="helpMsg">The thing about MusicVAE is that it only knows generic music; when you ask it for
+            <p id="helpMsg" hidden>The thing about MusicVAE is that it only knows generic music; when you ask it for
               a sample, it just picks something from the space of all possible melodies. It can't
               give you something that sounds more like Twinkle Twinkle Little Star, or more like your
               favourite Beatles song, without having to be retrained on a new corpus of data, and that 
@@ -116,34 +105,34 @@
         
         <section id="section_2" hidden>
           <div class="index">2</div>
-          <h2>Choose your sound</h2>
-          
+          <h2>새로운 사운드 선택</h2>
+ 
           <p>
-            We are now going to <b>train a small model</b> (right here in your browser!!!), based on MusicVAE, that will try to make sure all the 
-            sampled variations will sound like some music you give it. You can 
+            <button id="sampleBtn" class="button">
+              기본 예제 사용
+            </button>
+          </p>
+ 
+          <p>
+            <button id="urlBtn" class="button">
+                url에서 적재
+            </button>
+            <input id="urlInput" type="text" value="https://bitmidi.com/uploads/15119.mid">
+          </p>
+        
+          <p>
             <label class="button" id="fileBtn">
-              load a midi file
+              새로운 미디 파일 적재
               <input type="file" id="fileInput" multiple>
             </label>
-            <b>or</b>
-            <button id="sampleBtn" class="button">
-              load our example
-            </button>
-            if you don't have a MIDI available. 
-            <div>
-              Or, if you have the URL of a file (like from 
-              <a href="https://bitmidi.com/backstreet-boys-i-want-it-that-way-mid">BitMidi</a>) you can
-              use that too:
-              <input id="urlInput" type="text" value="https://bitmidi.com/uploads/15119.mid">
-              <button id="urlBtn" class="button">
-                load from url
-              </button>.
-            </div>
           </p>
+            
+
+
           <b><p id="status" hidden></p></b>
           
           <div id="input" hidden>
-            <p>This is what your file sounds like:</p>
+            <p>새로운 사운드 듣기</p>
             <div class="relative">
               <button id="btnPlayInput" class="button-circle" aria-label="play">
                 <svg class="iconPlay" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
@@ -158,7 +147,7 @@
         
         <section id="section_3" hidden>
           <div class="index">3</div>
-          <h2>Personalize the model!</h2>
+          <h2>새로운 사운드로 훈련하기</h2>
           
           <div id="hasMelody" hidden>
             <p>The MIDI file you uploaded had several instruments, so this is what we think the melody is. This is what we will be training on.</p>
@@ -173,24 +162,20 @@
             </div>
           </div>
           
-          <p id="beforeTraining">We're ready to start training on the MIDI that you uploaded! If you think about MusicVAE as representing the
-            space of all possible melodies as a giant sphere, we are now building a smaller sphere 
-            inside of it, which represents all the melodies that are musically in the same neighbourhood as <b>yours</b>. The more steps you 
-            train for, the better the results are. <br>
-            When you're ready, <button class="button" id="btnTrain">start training!!</button> for <input id="trainingSteps" value="100" type="tel"> steps.
+          <p id="beforeTraining">
+            <button class="button" id="btnTrain">훈련하기 시작!</button> <input id="trainingSteps" value="100" type="tel"> 단계 반복
           </p>
-          <p id="doneTraining" hidden><b>Training complete!</b><br>
-            We've now added 4 new MidiMe sliders to Step 1: these super slliders
-            control the features that make the random samples sound like <b>your</b> input. Go slide them around and see
-            how the samples change!<br>
+          <p id="doneTraining" hidden><b>훈련하기 끝!</b><br>
+            <br>
           </p>
           <div id="duringTraining" hidden>
-            <p>Training step: <b id="trainingStep">0</b> / <span id="totalSteps">100</span></p>
-            <p>To check how well we're training the model, we can track its error reconstructing your
-              uploaded file. We're not looking for it to become exactly 0 -- just to go down and flatten out. </p>
+            <p>훈련 단계: <b id="trainingStep">0</b> / <span id="totalSteps">100</span></p>
+            <p>손실도 추이</p>
             <svg id="errorGraph" width="300"></svg>
           </div>
         </section>
+
+
       </div>
     </div>
   </body>  

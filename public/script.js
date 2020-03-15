@@ -202,6 +202,7 @@ async function showInput(ns) {
 
 // Get a new random sample.
 async function sample() {
+  //console.log('sample in');
   stopPlayer(playerSample, document.getElementById('btnPlaySample'));
   
   let zArray;
@@ -229,6 +230,7 @@ async function sample() {
   updateFullSliders(zArray);
   updateVisualizer();
   training.zArray = zArray;
+  //console.log('sample done');
 }
 
 function onResize() {
